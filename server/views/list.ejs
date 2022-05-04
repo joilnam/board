@@ -18,7 +18,8 @@
       <th scope="col">no.</th>
       <th scope="col">Title</th>
       <th scope="col">Writer</th>
-      <th scope="col">삭제여부</th>
+      <th scope="col">삭제</th>
+      <th scope="col">수정</th>
     </tr>
     </thead>
     <tbody>
@@ -28,6 +29,7 @@
         <td><a href="detail/<%= cinetoks[i]._id %>.ejs"><%= cinetoks[i].title %></a></td>
         <td><%= cinetoks[i].writer %></td>
         <td><button class="delete" data-id="<%=cinetoks[i]._id%>>" type="submit">삭제</button></td>
+        <td><button class="edit" data-id="<%=cinetoks[i]._id%>>" type="submit">수정</button></td>
       </tr>
     <% } %>
     </tbody>
@@ -43,6 +45,18 @@
       data:{_id:rowNum},
     }).done(function(result){
         location.reload();
+    }).fail(function(){
+      console.log('실패!')
+    });
+  })
+  $('.edit').click(function(e){
+    let rowNum=e.target.dataset.id;
+    $.ajax({
+      method:"EDIT",
+      url:'/edit:<%= cinetoks._id%>',
+      data:{_id:rowNum},
+    }).done(function(result){
+      location.reload();
     }).fail(function(){
       console.log('실패!')
     });
